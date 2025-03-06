@@ -1,40 +1,56 @@
 import React from "react";
-import desktop_img from "../../../../public/assets/icon-nav-home.svg";
-import movie_icon from "../../../../public/assets/icon-nav-movies.svg";
-import tv_icon from "../../../../public/assets/icon-nav-tv-series.svg";
 import fav_icon from "../../../../public/assets/icon-nav-bookmark.svg";
 import profile_icon from "../../../../public/assets/image-avatar.png";
 import movie_img from "../../../../public/assets/logo.svg";
-function Menu_div({ MvieFilter, Tvclick, Allclick, MenuFavClick }) {
+import Tv_icon from "../../__atoms/tv_icon/Tv_icon";
+import Desktop_icon from "../../__atoms/desktop_icon/Desktop_icon";
+import Movie_icon from "../../__atoms/movie_icon/Movie_icon";
+import Fav_icon from "../../__atoms/fav_icon/Fav_icon";
+function Menu_div({
+  MvieFilter,
+  Tvclick,
+  Allclick,
+  MenuFavClick,
+  tv,
+  all,
+  movie,
+  fav,
+}) {
+  const Reload = () => {
+    window.location.reload();
+  };
   return (
     <div className="flex-col py-[32px] flex items-center justify-between min-w-[96px]   bg-[#161D2F] rounded-[20px] ">
       <div className="flex flex-col gap-[74px] items-center justify-center">
-        <img src={movie_img} alt="" />
+        <button className=" cursor-pointer" onClick={Reload}>
+          <img src={movie_img} alt="" />
+        </button>
         <div className="flex flex-col gap-[40px] items-center justify-center">
-          <img
+          <button
             onClick={Allclick}
             className="cursor-pointer w-[20px] h-[20px]"
-            src={desktop_img}
-            alt=""
-          />
-          <img
+          >
+            <Desktop_icon all={all} />
+          </button>
+          <button
             onClick={MvieFilter}
             className="cursor-pointer w-[20px] h-[20px]"
-            src={movie_icon}
-            alt=""
-          />
-          <img
-            onClick={Tvclick}
+          >
+            <Movie_icon movie={movie} />
+          </button>
+
+          <button
             className="cursor-pointer w-[20px] h-[20px]"
-            src={tv_icon}
-            alt=""
-          />
-          <img
-            onClick={MenuFavClick}
+            onClick={Tvclick}
+          >
+            <Tv_icon tv={tv} />
+          </button>
+          <button
             className="w-[20px] h-[20px] cursor-pointer"
-            src={fav_icon}
-            alt=""
-          />
+            onClick={MenuFavClick}
+          >
+            <Fav_icon fav={fav} />
+          </button>
         </div>
       </div>
       <img className="w-[40px] h-[40px]" src={profile_icon} alt="" />

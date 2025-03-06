@@ -8,10 +8,17 @@ import "swiper/css/pagination";
 import movie_icon from "../../../../public/assets/icon-nav-movies.svg";
 import tv_icon from "../../../../public/assets/icon-nav-tv-series.svg";
 import "../slider/styles.css";
-import unclicked_fav from "../../../../public/assets/unclickedfav.svg";
 import { FreeMode, Pagination } from "swiper/modules";
+import Fav_unclicked_icon from "../../__atoms/fav_unclicked_icon/Fav_unclicked_icon";
 
-export default function App({ FavClick }) {
+export default function App({
+  FavClick,
+  slidervisible,
+  play_icon,
+  SetSliderVisible,
+  HideSlider,
+  favourites,
+}) {
   const trendingitems = Data.filter((item) => item.isTrending);
   return (
     <>
@@ -20,21 +27,39 @@ export default function App({ FavClick }) {
         spaceBetween={30}
         freeMode={true}
         loop={true}
-        pagination={{
-          clickable: true,
-        }}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
       >
         {trendingitems.map((info, key) => (
-          <SwiperSlide key={key} className={` w-[470px]`}>
-            <img
-              onClick={FavClick}
+          <SwiperSlide
+            key={key}
+            className={`h-[230px] w-[470px] rounded-[8px]`}
+            onMouseEnter={() => SetSliderVisible(key)}
+            onMouseLeave={HideSlider}
+          >
+            {slidervisible === key && (
+              <div className=" w-[100%] h-[100%] bg-[#00000080] flex items-center justify-center absolute top-0">
+                <div className=" cursor-pointer bg-white/25  py-[9px] gap-[19px] rounded-[28px] pl-[9px] pr-[24px] flex items-center justify-center">
+                  <img src={play_icon} alt="" />
+                  <p className="text-[18px]  font-[400] text-[#fff]">Play</p>
+                </div>
+              </div>
+            )}
+            <div
+              onClick={() => FavClick(info)}
               className="w-[32px] absolute top-[16px] right-[16px] cursor-pointer"
-              src={unclicked_fav}
+            >
+              <Fav_unclicked_icon
+                isBookmarked={favourites.some(
+                  (fav) => fav.title === info.title
+                )}
+              />
+            </div>
+            <img
+              className="w-[100%] h-[100%] "
+              src={info.thumbnail.trending.large}
               alt=""
             />
-            <img src={info.thumbnail.trending.large} alt="" />
             <div className="flex justify-end items-start absolute bottom-[24px] left-[24px] flex-col">
               <div className="flex gap-[8px]  items-center">
                 <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75]">

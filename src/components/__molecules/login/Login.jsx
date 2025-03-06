@@ -7,21 +7,30 @@ function Login({
   loginpassword,
   TakeLoginPassword,
   SignUpClick,
+  signinerror,
+  signinerrormessage,
+  signinerror2,
+  signinerrormessage2,
 }) {
   return (
     <div className="w-[400px] h-[373px] bg-[#161D2F] rounded-[20px] p-[32px]">
       <h1 className="text-[32px] font-[400] text-[#fff]">Login</h1>
       <form onSubmit={LoginSubmit} action="">
-        <div className="mt-[40px] pl-[16px] h-[37px] w-full border-b-solid border-b-[1px] border-b-[#5A698F]">
+        <div className="relative mt-[40px] pl-[16px] h-[37px] w-full border-b-solid border-b-[1px] border-b-[#5A698F]">
           <input
             onChange={TakeLoginEmail}
             value={loginemail}
-            className="w-[300px] text-[15px] font-[400] text-[#FFF] outline-none"
+            className="  w-[300px] text-[15px] font-[400] text-[#FFF] outline-none"
             placeholder="Email address"
             type="text"
           />
+          {signinerror && (
+            <p className="text-[13px] font-[400] text-[#FC4747] absolute top-0 right-0">
+              {signinerrormessage}
+            </p>
+          )}
         </div>
-        <div className="mt-[24px] pl-[16px] h-[37px] w-full border-b-solid border-b-[1px] border-b-[#5A698F]">
+        <div className=" relative mt-[24px] pl-[16px] h-[37px] w-full border-b-solid border-b-[1px] border-b-[#5A698F]">
           <input
             value={loginpassword}
             onChange={TakeLoginPassword}
@@ -29,6 +38,11 @@ function Login({
             placeholder="Password"
             type="text"
           />
+          {signinerror2 && (
+            <p className="text-[13px] font-[400] text-[#FC4747] absolute top-0 right-0">
+              {signinerrormessage2}
+            </p>
+          )}
         </div>
         <button className="mt-[40px] w-[100%] rounded-[6px] bg-[#FC4747] h-[48px] cursor-pointer text-[15px] font-[400] text-[#fff]">
           Login to your account
