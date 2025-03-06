@@ -137,7 +137,7 @@ function Main() {
       localStorage.setItem("login", "yes");
       setcontent(true);
     } else {
-      const emailNotFound = !users.some((user) => user.email === loginemail);
+      const emailNotFound = users.every((user) => user.email !== loginemail);
       const passwordIncorrect = users.some(
         (user) => user.email === loginemail && user.password !== loginpassword
       );
