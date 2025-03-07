@@ -137,6 +137,13 @@ function Main() {
   const HideSlider = () => {
     setslidervisible(null);
   };
+  const [visibleItem2, setVisibleItem2] = useState(null);
+  const Govisible2 = (id) => {
+    setVisibleItem2(id);
+  };
+  const Hide2 = () => {
+    setVisibleItem2(null);
+  };
 
   return (
     <div
@@ -237,7 +244,7 @@ function Main() {
                         dot_img={dot_img}
                         tv_icon={tv_icon}
                         movie_icon={movie_icon}
-                        GoVisible={GoVisible}
+                        GoVisible={() => GoVisible(key)}
                         Hide={Hide}
                         visibleItem={visibleItem}
                         play_icon={play_icon}
@@ -265,9 +272,9 @@ function Main() {
                             dot_img={dot_img}
                             tv_icon={tv_icon}
                             movie_icon={movie_icon}
-                            GoVisible={GoVisible}
-                            Hide={Hide}
-                            visibleItem={visibleItem}
+                            GoVisible={Govisible2}
+                            Hide={Hide2}
+                            visibleItem={visibleItem2}
                             play_icon={play_icon}
                           />
                         ))}
