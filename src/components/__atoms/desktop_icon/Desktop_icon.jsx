@@ -9,6 +9,7 @@ function Desktop_icon({ all }) {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
+      className="icon"
     >
       <path
         fill-rule="evenodd"

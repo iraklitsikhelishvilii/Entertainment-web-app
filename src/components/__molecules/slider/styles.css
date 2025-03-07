@@ -12,3 +12,9 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 530px) {
+  .swiper {
+    min-height: 140px;
+  }
+}

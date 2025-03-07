@@ -1,17 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Login({
-  LoginSubmit,
-  TakeLoginEmail,
-  loginemail,
-  loginpassword,
-  TakeLoginPassword,
-  SignUpClick,
-  signinerror,
-  signinerrormessage,
-  signinerror2,
-  signinerrormessage2,
-}) {
+function Login({ SignUpClick, setcontent }) {
+  const [loginemail, setloginemail] = useState("");
+  const TakeLoginEmail = (e) => {
+    setloginemail(e.target.value);
+  };
+  const [loginpassword, setloginpassword] = useState("");
+  const TakeLoginPassword = (e) => {
+    setloginpassword(e.target.value);
+  };
+
+  const ValidEmail = /^[a-zA-Z0-9._:%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const ValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  const [signinerror, setsigninerror] = useState(false);
+  const [signinerrormessage, setsigninerrormessage] = useState("");
+  const [signinerror2, setsigninerror2] = useState(false);
+  const [signinerrormessage2, setsigninerrormessage2] = useState("");
+  const LoginSubmit = (e) => {
+    e.preventDefault();
+    setsigninerror(false);
+    setsigninerror2(false);
+    setsigninerrormessage("");
+    setsigninerrormessage2("");
+
+    if (!ValidEmail.test(loginemail)) {
+      setsigninerror(true);
+      setsigninerrormessage("Invalid email format");
+      return;
+    }
+
+    if (!ValidPassword.test(loginpassword)) {
+      setsigninerror2(true);
+      setsigninerrormessage2("Invalid password format");
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem("user")) || [];
+
+    const user = users.find(
+      (user) => user.email === loginemail && user.password === loginpassword
+    );
+
+    if (user) {
+      localStorage.setItem("login", "yes");
+      setcontent(true);
+    } else {
+      const emailNotFound = users.every((user) => user.email !== loginemail);
+      const passwordIncorrect = users.some(
+        (user) => user.email === loginemail && user.password !== loginpassword
+      );
+
+      if (emailNotFound) {
+        setsigninerror(true);
+        setsigninerrormessage("Email is not registered");
+      }
+
+      if (passwordIncorrect) {
+        setsigninerror2(true);
+        setsigninerrormessage2("Incorrect password");
+      }
+    }
+  };
+
   return (
     <div className="w-[400px] h-[373px] bg-[#161D2F] rounded-[20px] p-[32px]">
       <h1 className="text-[32px] font-[400] text-[#fff]">Login</h1>

@@ -1,21 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Signup({
-  Submit,
-  email,
-  TakeEmail,
-  password,
-  TakePassword,
-  repeatpassword,
-  TakeRepeatPassword,
-  SignUpClick,
-  signuperror,
-  signuperrormessage,
-  signuperror2,
-  signuperrormessage2,
-  signuperrormessage3,
-  signuperror3,
-}) {
+function Signup({ SignUpClick, setsignup }) {
+  const [info, setinfo] = useState([]);
+  const [email, setemail] = useState("");
+  const TakeEmail = (e) => {
+    setemail(e.target.value);
+  };
+  const [password, setpassword] = useState("");
+  const TakePassword = (e) => {
+    setpassword(e.target.value);
+  };
+  const [repeatpassword, setrepeatpassword] = useState("");
+  const TakeRepeatPassword = (e) => {
+    setrepeatpassword(e.target.value);
+  };
+  const ValidEmail = /^[a-zA-Z0-9._:%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const ValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  const [signuperror, setsignuperror] = useState(false);
+  const [signuperror2, setsignuperror2] = useState(false);
+  const [signuperror3, setsignuperror3] = useState(false);
+  const [signuperrormessage, setsignuperrormessage] = useState("");
+  const [signuperrormessage2, setsignuperrormessage2] = useState("");
+  const [signuperrormessage3, setsignuperrormessage3] = useState("");
+  const Submit = (e) => {
+    e.preventDefault();
+
+    setsignuperror(false);
+    setsignuperror2(false);
+    setsignuperror3(false);
+    setsignuperrormessage("");
+    setsignuperrormessage2("");
+    setsignuperrormessage3("");
+
+    if (!ValidEmail.test(email)) {
+      setsignuperror(true);
+      setsignuperrormessage("Invalid email");
+    }
+
+    if (!ValidPassword.test(password)) {
+      setsignuperror2(true);
+      setsignuperrormessage2("Invalid password");
+    }
+
+    if (password !== repeatpassword || repeatpassword === "") {
+      setsignuperror3(true);
+      setsignuperrormessage3("Passwords do not match");
+    }
+    const alreadyregistered = JSON.parse(localStorage.getItem("user")) || [];
+
+    if (alreadyregistered.find((user) => user.email === email)) {
+      setsignuperror(true);
+      setsignuperrormessage("Email is already registered");
+
+      return;
+    }
+    if (
+      ValidEmail.test(email) &&
+      ValidPassword.test(password) &&
+      password === repeatpassword
+    ) {
+      const storedUsers = JSON.parse(localStorage.getItem("user")) || [];
+      const updatedInfo = [...storedUsers, { email, password }];
+      setinfo(updatedInfo);
+      localStorage.setItem("user", JSON.stringify(updatedInfo));
+      setemail("");
+      setpassword("");
+      setrepeatpassword("");
+      setsignup(false);
+    }
+  };
+
   return (
     <div className="w-[400px]  bg-[#161D2F] rounded-[20px] p-[32px]">
       <h1 className="text-[32px] font-[400] text-[#fff]">Sign Up</h1>

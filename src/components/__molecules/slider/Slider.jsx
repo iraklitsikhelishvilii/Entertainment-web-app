@@ -23,12 +23,13 @@ export default function App({
   return (
     <>
       <Swiper
-        slidesPerView={2.5}
-        spaceBetween={30}
+        slidesPerView={1.5}
+        spaceBetween={15}
         freeMode={true}
         loop={true}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
+        breakpoints={{ 800: { slidesPerView: 2.5 }, 530: { spaceBetween: 30 } }}
       >
         {trendingitems.map((info, key) => (
           <SwiperSlide
@@ -60,9 +61,9 @@ export default function App({
               src={info.thumbnail.trending.large}
               alt=""
             />
-            <div className="flex justify-end items-start absolute bottom-[24px] left-[24px] flex-col">
+            <div className="flex justify-end items-start absolute bottom-[24px] left-[24px] flex-col max-[530px]:bottom-[15px] max-[530px]:left-[15px] ">
               <div className="flex gap-[8px]  items-center">
-                <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75]">
+                <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75] max-[530px]:text-[12px]">
                   {info.year}
                 </p>
                 <img className="w-[3px] h-[3px]" src={dot_img} alt="" />
@@ -74,16 +75,16 @@ export default function App({
                     }`}
                     alt=""
                   />
-                  <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75]">
+                  <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75] max-[530px]:text-[12px]">
                     {info.category}
                   </p>
                 </div>
                 <img className="w-[3px] h-[3px]" src={dot_img} alt="" />
-                <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75]">
+                <p className="font-[400] text-[13px] text-[#fff] opacity-[0.75] max-[530px]:text-[12px]">
                   {info.rating}
                 </p>
               </div>
-              <h1 className="text-[18px] font-[400] text-[#fff]">
+              <h1 className="text-[18px] font-[400] text-[#fff] max-[530px]:text-[15px]">
                 {info.title}
               </h1>
             </div>
